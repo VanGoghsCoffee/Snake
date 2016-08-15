@@ -3,3 +3,6 @@
 .idea/
 *~
 intern/build/obj
+*.o
+.DS_Store
+intern/compiler/*
