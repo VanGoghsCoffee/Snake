@@ -6,10 +6,13 @@
 #include "GLUT/glut.h"
 
 namespace Game
-{ 
+{
+  // Sorry for global variable
+  // needed for gluts display function
+  SnakeGame snakeGame;
+  
   void KeyEvent(int _Key, int, int)
   {
-    SnakeGame snakeGame;
     switch (_Key)
     {
     case GLUT_KEY_LEFT:
@@ -29,16 +32,14 @@ namespace Game
 
   void Display()
   {
-    SnakeGame snakeGame;
-    glClear(GL_COLOR_BUFFER_BIT);
     View v;
+    glClear(GL_COLOR_BUFFER_BIT);
     snakeGame.Draw(v);
     glutSwapBuffers();
   }
 
   void Timer(int = 0)
   {
-    SnakeGame snakeGame;
     snakeGame.Tick();
     Display();
     glutTimerFunc(100, Game::Timer, 0);
@@ -53,37 +54,25 @@ namespace Game
     , m_StartupState       ()
     , m_ShutdownState      ()
     , m_UnloadMapState     ()
-    , m_SnakeGame          ()
   {
   }
 
   void CApplication::OnStart(int argc, char **argv)
   {
-    std::cout << "OnStart::::" << std::endl;
+    // added couts for checking if glut loads everything
+    // it's supposed to. Poor mans choice -> but it works
     glutInit(&argc, argv);
-    std::cout << "after glutInit" << std::endl;
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
-    std::cout << "after glutInitDisplayMode" << std::endl;
     glutInitWindowSize(Field::WIDTH * Field::BLOCK_WIDTH, Field::HEIGHT * Field::BLOCK_HEIGHT);
-    std::cout << "after glutInitWindowSize" << std::endl;
     glutInitWindowPosition(100, 780);
-    std::cout << "after GlutInitWindowPosition" << std::endl;
     glutCreateWindow("Snake");
-    std::cout << "after glutCreateWindow" << std::endl;
     glClearColor(0, 0, 0, 1.0);
-    std::cout << "after glClearColor" << std::endl;
     glMatrixMode(GL_PROJECTION);
-    std::cout << "after glMatrixMode" << std::endl;
     glLoadIdentity();
-    std::cout << "after glLoadIdentity" << std::endl;
     glOrtho(0, Field::WIDTH * Field::BLOCK_WIDTH, Field::HEIGHT * Field::BLOCK_HEIGHT, 0, -1.0, 1.0);
-    std::cout << "after glOrtho" << std::endl;
     glutDisplayFunc(Display);
-    std::cout << "after glutDisplayFunc" << std::endl;
     glutSpecialFunc(KeyEvent);
-    std::cout << "after glutSpecialFunc" << std::endl;
     Timer();
-    std::cout << "after TimerInit" << std::endl;
   }
 
   void CApplication::OnRun()
@@ -91,6 +80,10 @@ namespace Game
     m_StartupState.OnEnter();
     m_pCurrentState = &m_StartupState;
     glutMainLoop();
+
+    // Implemented states
+    // glut comes with it's own game loop which I'm using
+    // for this project
     /*for (;;)
     {
       switch (m_pCurrentState->OnRun())

@@ -7,7 +7,6 @@ int main(int argc, char **argv)
 {
   Game::CApplication Snake;
 
-  std::cout << "main entry" << std::endl;
   try
   {
     Snake.OnStart(argc, argv);

@@ -11,7 +11,7 @@ namespace Game
     glVertex2f(_X1, _Y1);
     glVertex2f(_X2, _Y1);
     glVertex2f(_X2, _Y2);
-    glVertex2f(_X1, _Y1);
+    glVertex2f(_X1, _Y2);
     glEnd();
   }
 

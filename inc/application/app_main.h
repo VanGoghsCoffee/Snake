@@ -37,6 +37,5 @@ namespace Game
     CStartupState   m_StartupState;
     CShutdownState  m_ShutdownState;
     CUnloadMapState m_UnloadMapState;
-    SnakeGame*      m_SnakeGame;
   };
 } // namespace Game
